@@ -1,0 +1,173 @@
+local CurrentCamera = game:GetService("Workspace").CurrentCamera
+local Inset = game:GetService("GuiService"):GetGuiInset().Y
+local RunService = game:GetService("RunService")
+
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local LocalPlayer = game.Players.LocalPlayer
+
+local Line = Drawing.new("Line")
+local Circle = Drawing.new("Circle")
+
+local Plr = game.Players.LocalPlayer
+
+local box = Instance.new("Part")
+box.Parent = game.Workspace
+box.Anchored = true
+box.CanCollide = false
+box.Size = Vector3.new(Settings.Settings.boxSize, Settings.Settings.boxSize, Settings.Settings.boxSize)
+box.Material = Settings.Settings.boxMaterial
+box.Transparency = 0
+box.Color = Settings.Settings.boxColor
+
+local box2 = Instance.new("Part")
+box2.Parent = game.Workspace
+box2.Anchored = true
+box2.CanCollide = false
+box2.Size = Vector3.new(5, 5, 5)
+box2.Material = "Neon"
+box2.Transparency = 1
+box2.Color = Color3.fromRGB(0, 0, 0)
+
+local dot = Instance.new("BillboardGui")
+dot.Parent = box2
+dot.Name = "4shove"
+dot.Adornee = Adornee
+dot.Size = UDim2.new(0.5, 0, 0.5, 0)
+dot.AlwaysOnTop = true
+
+local a = Instance.new("Frame")   
+a.Parent = dot 
+a.Size = UDim2.new(0.5, 0, 0.5, 0)
+a.BackgroundTransparency = 0
+a.BackgroundColor3 = Settings.Settings.dotColor
+
+local g = Instance.new("UICorner")
+g.Parent = a
+g.CornerRadius = UDim.new(1, 1)
+
+
+Mouse.KeyDown:Connect(function(KeyPressed)
+    if KeyPressed == (Settings.AimLock.Aimlockkey) then
+        if Settings.AimLock.Enabled == true then
+            Settings.AimLock.Enabled = false
+            if Settings.AimLock.Notifications == true then
+                Plr = FindClosestPlayer()
+                TextLabel_2.Text = "Disabled"
+                TextLabel_3.Text = "\"\""
+                ImageLabel.Image = "rbxassetid://7799943153"
+                TextLabel_4.Text = "Nil/Nil"
+            end
+        else
+            Plr = FindClosestPlayer()
+            Settings.AimLock.Enabled = true
+            if Settings.AimLock.Notifications == true then
+                TextLabel_2.Text = "Enabled"
+                TextLabel_3.Text = "\""..tostring(Plr.DisplayName).."\""
+                local userId = Plr.UserId
+                local content, isReady = game.Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
+                ImageLabel.Image = content
+                game:GetService("RunService").RenderStepped:Connect(function()
+                    local humanoid = Plr.Character:WaitForChild("Humanoid")
+                    TextLabel_4.Text = math.floor(humanoid.Health).."/"..humanoid.MaxHealth
+                end)
+            end
+        end
+    end
+end)
+
+function FindClosestPlayer()
+    local ClosestDistance, ClosestPlayer = math.huge, nil;
+    for _, Player in next, game:GetService("Players"):GetPlayers() do
+        if Player ~= LocalPlayer then
+            local Character = Player.Character
+            if Character and Character.Humanoid.Health > 1 then 
+                local Position, IsVisibleOnViewPort = CurrentCamera:WorldToViewportPoint(Character.HumanoidRootPart.Position)
+                if IsVisibleOnViewPort then
+                    local Distance = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(Position.X, Position.Y)).Magnitude
+                    if Distance < ClosestDistance then
+                        ClosestPlayer = Player
+                        ClosestDistance = Distance
+                    end
+                end
+            end
+        end
+    end
+    return ClosestPlayer, ClosestDistance
+end
+
+RunService.Heartbeat:connect(function()
+    if Settings.AimLock.Enabled == true then
+        local Vector = CurrentCamera:WorldToViewportPoint(Plr.Character[Settings.AimLock.Aimpart].Position +(Plr.Character[Settings.AimLock.Aimpart].Velocity *Settings.AimLock.Prediction))
+        Line.Color = Settings.Settings.tracerColor
+        Line.Transparency = Settings.Settings.Transparency
+        Line.Thickness = Settings.Settings.TracerThickness
+        Line.From = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Line.To = Vector2.new(Vector.X, Vector.Y)
+        box.CFrame = CFrame.new(Plr.Character[Settings.AimLock.Aimpart].Position +(Plr.Character[Settings.AimLock.Aimpart].Velocity *Settings.AimLock.Prediction))
+        box2.CFrame = CFrame.new(Plr.Character[Settings.AimLock.Aimpart].Position +(Plr.Character[Settings.AimLock.Aimpart].Velocity *Settings.AimLock.Prediction))
+        Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Circle.Transparency = Settings.Settings.Transparency
+        Circle.Thickness = Settings.Settings.FOVThickness
+        Circle.Radius = Settings.Settings.FOVSize
+        Circle.Color = Settings.Settings.tracerColor
+        box.Material = Settings.Settings.boxMaterial
+        box.Color = Settings.Settings.boxColor
+        Circle.Visible = Settings.Settings.FOV
+        Line.Visible = Settings.Settings.Tracer
+    elseif Settings.AimLock.Enabled == false then
+        Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Circle.Visible = Settings.Settings.FOV
+        Circle.Thickness = Settings.Settings.FOVThickness
+        Circle.Radius = Settings.Settings.FOVSize
+        Circle.Color = Settings.Settings.tracerColor
+        Line.Visible = false
+        box.CFrame = CFrame.new(9999, 9990, 9999)
+        box2.CFrame = CFrame.new(9999, 9990, 9999)
+    else
+        print("lol")
+    end
+end)
+
+RunService.Heartbeat:connect(function()
+    if Settings.Settings.box == true then
+        box.Size = Vector3.new(Settings.Settings.boxSize, Settings.Settings.boxSize, Settings.Settings.boxSize)
+    elseif Settings.Settings.box == false then
+        box.Size = Vector3.new(0, 0, 0)
+    end
+end)
+
+RunService.Heartbeat:connect(function()
+    if Settings.Settings.dot == true then
+        a.BackgroundTransparency = 0
+    elseif Settings.Settings.dot == false then
+        a.BackgroundTransparency = 1
+    end
+end)
+
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+setreadonly(mt, false)
+mt.__namecall = newcclosure(function(...)
+    local args = {...}
+    if Settings.AimLock.Enabled and getnamecallmethod() == "FireServer" and args[2] == "MousePos" then
+        args[3] = Plr.Character[Settings.AimLock.Aimpart].Position + (Plr.Character[Settings.AimLock.Aimpart].Velocity * Settings.AimLock.Prediction)
+        return old(unpack(args))
+    end
+    return old(...)
+end)
+
+if Settings.AimLock.AirshotFunc == true then
+    if Plr.Character.Humanoid.Jump == true and Plr.Character.Humanoid.FloorMaterial == Enum.Material.Air then
+        Settings.AimLock.Aimpart = 'RightFoot'
+    else
+        Plr.Character:WaitForChild("Humanoid").StateChanged:Connect(function(old,flew)
+            if flew == Enum.HumanoidStateType.Freefall then
+                Settings.AimLock.Aimpart = 'RightFoot'
+            else
+                Settings.AimLock.Aimpart = 'LowerTorso'
+                wait(2)
+                Settings.AimLock.Aimpart = Settings.AimLock.OldAimpart
+            end
+        end)
+    end
+end
