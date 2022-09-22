@@ -1,0 +1,708 @@
+-- Lock Revamp
+
+local library = loadstring(game:HttpGet('https://raw.githubusercontent.com/difficuItly/ghost.hvh/main/ui'))()
+
+local Settings = {
+    AimLock = {
+        Enabled = false,
+        Aimlockkey = "q",
+        Prediction = 0.1293467,
+        OldAimpart = 'HumanoidRootPart',
+        Aimpart = 'HumanoidRootPart',
+        Notifications = true,
+		AirshotFunc = true,
+        KeybindEnable = false
+    },
+    Settings = {
+        FOVThickness = 1.5,
+        TracerThickness = 1.5,
+        Transparency = 1,
+        tracerColor = Color3.fromRGB(84, 101, 255),
+        dotColor = Color3.fromRGB(84, 101, 255),
+        boxColor = Color3.fromRGB(1, 1, 1),
+        boxMaterial = Enum.Material.Neon,
+        boxSize = 5,
+        FOV = false,
+        box = false,
+        dot = false,
+        Tracer = false,
+        FOVSize = 100
+    }
+
+}
+
+-- // Window \\ --
+local window = library.new([[ghost<font color="rgb(78, 93, 234)">.hvh</font>]], "nemv2")
+
+-- // Tabs \\ --
+local AimTab = window.new_tab('rbxassetid://4483345998')
+local MovementTab = window.new_tab('rbxassetid://10622527762')
+local VisualTab = window.new_tab('rbxassetid://10622522951')
+
+-- // Sections \\ --
+local Aimbot1 = AimTab.new_section('Aimbot Config')
+
+local Movement1 = MovementTab.new_section('Movement Config')
+
+local Visuals1 = VisualTab.new_section('Visuals Config')
+
+-- // Sector \\ --
+local sector = Aimbot1.new_sector('Settings', 'Left')
+local sector1 = Aimbot1.new_sector('Toggles', 'Right')
+local sector2 = Aimbot1.new_sector('Visual', 'Right')
+
+local sector3 = Movement1.new_sector('Speed', 'Left')
+local sector4 = Movement1.new_sector('Misc', 'Right')
+
+local sector5 = Visuals1.new_sector('ESP', 'Left')
+local sector6 = Visuals1.new_sector('Character', 'Right')
+local sector7 = Visuals1.new_sector('Guns', 'Left')
+local sector8 = Visuals1.new_sector('Misc', 'Right')
+
+-- // Elements \\ -- (Type, Name, State, Callback)
+
+local toggle = sector.element('Toggle', 'Enabled', false, function(v)
+    Settings.AimLock.Enabled = v.Toggle
+ end)
+
+local dropdown = sector.element('Dropdown', 'HitPart', {options = {'HumanoidRootPart', 'UpperTorso', 'LowerTorso', 'Head'}}, function(v)
+    Settings.AimLock.OldAimpart = v.Dropdown
+    Settings.AimLock.Aimpart = v.Dropdown
+end)
+
+local textbox = sector.element('TextBox', '0.1235723', {Text = {'0.1235723'}}, function(v)
+    Settings.AimLock.Prediction = v.Text
+end)
+
+--
+local toggle5 = sector1.element('Toggle', 'FoV', false, function(v)
+    Settings.Settings.FOV = v.Toggle
+end)
+
+local toggle2 = sector1.element('Toggle', 'Tracer', false, function(v)
+    Settings.Settings.Tracer = v.Toggle
+end)
+
+toggle2:add_color({Color = Color3.fromRGB(84, 101, 255)}, nil, function(v)
+    Settings.Settings.tracerColor = v.Color
+    print(v.Color)
+ end)
+
+local toggle3 = sector1.element('Toggle', 'Box', false, function(v)
+    Settings.Settings.box = v.Toggle
+end)
+
+toggle3:add_color({Color = Color3.fromRGB(1, 1, 1)}, nil, function(v)
+    Settings.Settings.boxColor = v.Color    
+ end)
+
+local toggle4 = sector1.element('Toggle', 'Dot', false, function(v)
+    Settings.Settings.dot = v.Toggle
+end)
+
+toggle4:add_color({Color = Color3.fromRGB(84, 101, 255)}, nil, function(v)
+    Settings.Settings.dotColor = v.Color   
+end)
+
+--
+
+local slider = sector2.element('Slider', 'FoV Size', {default = {min = 60, max = 300, default = 100}}, function(v)
+   Settings.Settings.FOVSize = v.Slider
+end)
+
+local slider2 = sector2.element('Slider', 'FoV Thickness', {default = {min = 1, max = 7, default = 1.5}}, function(v)
+    Settings.Settings.FOVThickness = v.Slider
+ end)
+
+ local slider3 = sector2.element('Slider', 'Tracer Thickness', {default = {min = 1, max = 7, default = 1.5}}, function(v)
+    Settings.Settings.TracerThickness = v.Slider
+ end)
+
+ local slider4 = sector2.element('Slider', 'Box Size', {default = {min = 1, max = 10, default = 5}}, function(v)
+    Settings.Settings.boxSize = v.Slider
+ end)
+
+ local dropdown2 = sector2.element('Dropdown', 'Box Material', {options = {'Neon', 'ForceField'}}, function(v)
+    Settings.Settings.boxMaterial = v.Dropdown
+ end)
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Frame_2 = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local Frame_3 = Instance.new("Frame")
+local Frame_4 = Instance.new("Frame")
+local Frame_5 = Instance.new("Frame")
+local UIGradient = Instance.new("UIGradient")
+local stuff2 = Instance.new("Frame")
+local ImageLabel = Instance.new("ImageLabel")
+local Frame_6 = Instance.new("Frame")
+local stuff3 = Instance.new("Frame")
+local TextLabel_2 = Instance.new("TextLabel")
+local Frame_7 = Instance.new("Frame")
+local stuff1 = Instance.new("Frame")
+local ImageLabel_2 = Instance.new("ImageLabel")
+local TextLabel_3 = Instance.new("TextLabel")
+local stuff4 = Instance.new("Frame")
+local ImageLabel_3 = Instance.new("ImageLabel")
+local TextLabel_4 = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+Frame.BorderColor3 = Color3.fromRGB(78, 93, 234)
+Frame.Position = UDim2.new(0.196018398, 0, 0.517747819, 0)
+Frame.Size = UDim2.new(0, 402, 0, 233)
+Frame.Active = true
+Frame.Draggable = true
+
+Frame_2.Parent = Frame
+Frame_2.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Frame_2.BorderColor3 = Color3.fromRGB(30, 30, 30)
+Frame_2.Position = UDim2.new(0.0227272455, 0, 0.0386266112, 0)
+Frame_2.Size = UDim2.new(0, 384, 0, 25)
+
+TextLabel.Parent = Frame_2
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.Size = UDim2.new(0, 384, 0, 26)
+TextLabel.Font = Enum.Font.Ubuntu
+TextLabel.Text = "  ghost.hvh"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 16.000
+TextLabel.TextWrapped = true
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+Frame_3.Parent = Frame
+Frame_3.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
+Frame_3.BorderColor3 = Color3.fromRGB(30, 30, 30)
+Frame_3.Position = UDim2.new(0.388398767, 0, 0.571257591, 0)
+Frame_3.Size = UDim2.new(0, 237, 0, 91)
+
+Frame_4.Parent = Frame
+Frame_4.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
+Frame_4.BorderColor3 = Color3.fromRGB(30, 30, 30)
+Frame_4.Position = UDim2.new(0.0227272455, 0, 0.197551683, 0)
+Frame_4.Size = UDim2.new(0, 136, 0, 136)
+
+Frame_5.Parent = Frame
+Frame_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame_5.BorderColor3 = Color3.fromRGB(30, 30, 30)
+Frame_5.BorderSizePixel = 0
+Frame_5.Position = UDim2.new(0.0227272455, 0, 0.150214598, 0)
+Frame_5.Size = UDim2.new(0, 384, 0, 1)
+
+UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(32, 33, 38)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(81, 97, 243)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(32, 33, 38))}
+UIGradient.Parent = Frame_5
+
+stuff2.Name = "stuff2"
+stuff2.Parent = Frame
+stuff2.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+stuff2.BorderColor3 = Color3.fromRGB(30, 30, 30)
+stuff2.BorderSizePixel = 0
+stuff2.Position = UDim2.new(0.0252147913, 0, 0.20184347, 0)
+stuff2.Size = UDim2.new(0, 134, 0, 134)
+
+ImageLabel.Parent = stuff2
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BackgroundTransparency = 1.000
+ImageLabel.Position = UDim2.new(0.0522388071, 0, 0.0522388071, 0)
+ImageLabel.Size = UDim2.new(0, 120, 0, 120)
+ImageLabel.Image = "rbxassetid://7799943153"
+
+local thumbType = Enum.ThumbnailType.AvatarThumbnail
+local thumbSize = Enum.ThumbnailSize.Size420x420
+
+Frame_6.Parent = Frame
+Frame_6.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
+Frame_6.BorderColor3 = Color3.fromRGB(30, 30, 30)
+Frame_6.Position = UDim2.new(0.0227272455, 0, 0.828452945, 0)
+Frame_6.Size = UDim2.new(0, 136, 0, 32)
+
+stuff3.Name = "stuff3"
+stuff3.Parent = Frame
+stuff3.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+stuff3.BorderColor3 = Color3.fromRGB(30, 30, 30)
+stuff3.BorderSizePixel = 0
+stuff3.Position = UDim2.new(0.0252148081, 0, 0.832744777, 0)
+stuff3.Size = UDim2.new(0, 134, 0, 30)
+
+TextLabel_2.Parent = stuff3
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.Size = UDim2.new(0, 135, 0, 30)
+TextLabel_2.Font = Enum.Font.Ubuntu
+TextLabel_2.Text = "Enabled"
+TextLabel_2.TextColor3 = Color3.fromRGB(150, 150, 150)
+TextLabel_2.TextSize = 20.000
+
+Frame_7.Parent = Frame
+Frame_7.BackgroundColor3 = Color3.fromRGB(5, 5, 5)
+Frame_7.BorderColor3 = Color3.fromRGB(30, 30, 30)
+Frame_7.Position = UDim2.new(0.388398796, 0, 0.193575218, 0)
+Frame_7.Size = UDim2.new(0, 237, 0, 88)
+
+stuff1.Name = "stuff1"
+stuff1.Parent = Frame
+stuff1.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+stuff1.BorderColor3 = Color3.fromRGB(30, 30, 30)
+stuff1.BorderSizePixel = 0
+stuff1.Position = UDim2.new(0.390886426, 0, 0.197867066, 0)
+stuff1.Size = UDim2.new(0, 235, 0, 86)
+
+ImageLabel_2.Parent = stuff1
+ImageLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel_2.BackgroundTransparency = 1.000
+ImageLabel_2.Position = UDim2.new(0.076595746, 0, 0.216593653, 0)
+ImageLabel_2.Size = UDim2.new(0, 50, 0, 50)
+ImageLabel_2.Image = "rbxassetid://6961018885"
+ImageLabel_2.ImageColor3 = Color3.fromRGB(150, 150, 150)
+
+TextLabel_3.Parent = stuff1
+TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_3.BackgroundTransparency = 1.000
+TextLabel_3.Position = UDim2.new(0.331914872, 0, 0.328843921, 0)
+TextLabel_3.Size = UDim2.new(0, 135, 0, 30)
+TextLabel_3.Font = Enum.Font.Ubuntu
+TextLabel_3.Text = "\"coolguy123\""
+TextLabel_3.TextColor3 = Color3.fromRGB(150, 150, 150)
+TextLabel_3.TextScaled = true
+TextLabel_3.TextSize = 20.000
+TextLabel_3.TextWrapped = true
+
+stuff4.Name = "stuff4"
+stuff4.Parent = Frame
+stuff4.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+stuff4.BorderColor3 = Color3.fromRGB(30, 30, 30)
+stuff4.BorderSizePixel = 0
+stuff4.Position = UDim2.new(0.390886426, 0, 0.579841316, 0)
+stuff4.Size = UDim2.new(0, 235, 0, 88)
+
+ImageLabel_3.Parent = stuff4
+ImageLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel_3.BackgroundTransparency = 1.000
+ImageLabel_3.Position = UDim2.new(0.076595746, 0, 0.216593653, 0)
+ImageLabel_3.Size = UDim2.new(0, 50, 0, 50)
+ImageLabel_3.Image = "rbxassetid://4431165334"
+ImageLabel_3.ImageColor3 = Color3.fromRGB(150, 150, 150)
+
+TextLabel_4.Parent = stuff4
+TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_4.BackgroundTransparency = 1.000
+TextLabel_4.Position = UDim2.new(0.331914872, 0, 0.328843921, 0)
+TextLabel_4.Size = UDim2.new(0, 135, 0, 30)
+TextLabel_4.Font = Enum.Font.Ubuntu
+TextLabel_4.Text = "100/100"
+TextLabel_4.TextColor3 = Color3.fromRGB(150, 150, 150)
+TextLabel_4.TextScaled = true
+TextLabel_4.TextSize = 20.000
+TextLabel_4.TextWrapped = true
+
+local CurrentCamera = game:GetService("Workspace").CurrentCamera
+local Inset = game:GetService("GuiService"):GetGuiInset().Y
+local RunService = game:GetService("RunService")
+
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local LocalPlayer = game.Players.LocalPlayer
+
+local Line = Drawing.new("Line")
+local Circle = Drawing.new("Circle")
+
+local Plr = game.Players.LocalPlayer
+
+local Toggled = false
+local Keybind = "l"
+
+Mouse.KeyDown:Connect(function(Key)
+   if Key == Keybind then
+       if Toggled then
+           Toggled = false
+           ScreenGui.Enabled = true
+       else
+           Toggled = true
+           ScreenGui.Enabled = false
+       end
+   end
+end)
+
+local box = Instance.new("Part")
+box.Parent = game.Workspace
+box.Anchored = true
+box.CanCollide = false
+box.Size = Vector3.new(Settings.Settings.boxSize, Settings.Settings.boxSize, Settings.Settings.boxSize)
+box.Material = Settings.Settings.boxMaterial
+box.Transparency = 0
+box.Color = Settings.Settings.boxColor
+
+local box2 = Instance.new("Part")
+box2.Parent = game.Workspace
+box2.Anchored = true
+box2.CanCollide = false
+box2.Size = Vector3.new(5, 5, 5)
+box2.Material = "Neon"
+box2.Transparency = 1
+box2.Color = Color3.fromRGB(0, 0, 0)
+
+local dot = Instance.new("BillboardGui")
+dot.Parent = box2
+dot.Name = "4shove"
+dot.Adornee = Adornee
+dot.Size = UDim2.new(0.5, 0, 0.5, 0)
+dot.AlwaysOnTop = true
+
+local a = Instance.new("Frame")   
+a.Parent = dot 
+a.Size = UDim2.new(0.5, 0, 0.5, 0)
+a.BackgroundTransparency = 0
+a.BackgroundColor3 = Settings.Settings.dotColor
+
+local g = Instance.new("UICorner")
+g.Parent = a
+g.CornerRadius = UDim.new(1, 1)
+
+
+Mouse.KeyDown:Connect(function(KeyPressed)
+    if KeyPressed == (Settings.AimLock.Aimlockkey) then
+        if Settings.AimLock.KeybindEnable == true then
+            Settings.AimLock.KeybindEnable = false
+            if Settings.AimLock.Notifications and Settings.AimLock.Enabled == true then
+                Plr = FindClosestPlayer()
+                TextLabel_2.Text = "Disabled"
+                TextLabel_3.Text = "\"\""
+                ImageLabel.Image = "rbxassetid://7799943153"
+                TextLabel_4.Text = "Nil/Nil"
+                Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+                Circle.Visible = false
+            end
+        else
+            Plr = FindClosestPlayer()
+            Settings.AimLock.KeybindEnable = true
+            if Settings.AimLock.Notifications and Settings.AimLock.Enabled == true then
+                TextLabel_2.Text = "Enabled"
+                TextLabel_3.Text = "\""..tostring(Plr.DisplayName).."\""
+                local userId = Plr.UserId
+                local content, isReady = game.Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
+                ImageLabel.Image = content
+                game:GetService("RunService").RenderStepped:Connect(function()
+                    local humanoid = Plr.Character:WaitForChild("Humanoid")
+                    TextLabel_4.Text = math.floor(humanoid.Health).."/"..humanoid.MaxHealth
+                end)
+            end
+        end
+    end
+end)
+
+function FindClosestPlayer()
+    local ClosestDistance, ClosestPlayer = math.huge, nil;
+    for _, Player in next, game:GetService("Players"):GetPlayers() do
+        if Player ~= LocalPlayer then
+            local Character = Player.Character
+            if Character and Character.Humanoid.Health > 1 then 
+                local Position, IsVisibleOnViewPort = CurrentCamera:WorldToViewportPoint(Character.HumanoidRootPart.Position)
+                if IsVisibleOnViewPort then
+                    local Distance = (Vector2.new(Mouse.X, Mouse.Y) - Vector2.new(Position.X, Position.Y)).Magnitude
+                    if Distance < ClosestDistance then
+                        ClosestPlayer = Player
+                        ClosestDistance = Distance
+                    end
+                end
+            end
+        end
+    end
+    return ClosestPlayer, ClosestDistance
+end
+
+RunService.Heartbeat:connect(function()
+    if Settings.AimLock.Enabled == true and Settings.AimLock.KeybindEnable == true then
+        local Vector = CurrentCamera:WorldToViewportPoint(Plr.Character[Settings.AimLock.Aimpart].Position +(Plr.Character[Settings.AimLock.Aimpart].Velocity *Settings.AimLock.Prediction))
+        Line.Color = Settings.Settings.tracerColor
+        Line.Transparency = Settings.Settings.Transparency
+        Line.Thickness = Settings.Settings.TracerThickness
+        Line.From = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Line.To = Vector2.new(Vector.X, Vector.Y)
+        box.CFrame = CFrame.new(Plr.Character[Settings.AimLock.Aimpart].Position +(Plr.Character[Settings.AimLock.Aimpart].Velocity *Settings.AimLock.Prediction))
+        box2.CFrame = CFrame.new(Plr.Character[Settings.AimLock.Aimpart].Position +(Plr.Character[Settings.AimLock.Aimpart].Velocity *Settings.AimLock.Prediction))
+        Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Circle.Transparency = Settings.Settings.Transparency
+        Circle.Thickness = Settings.Settings.FOVThickness
+        Circle.Radius = Settings.Settings.FOVSize
+        Circle.Color = Settings.Settings.tracerColor
+        box.Material = Settings.Settings.boxMaterial
+        box.Color = Settings.Settings.boxColor
+        Circle.Visible = Settings.Settings.FOV
+        Line.Visible = Settings.Settings.Tracer
+    elseif Settings.AimLock.Enabled and Settings.AimLock.KeybindEnable == false then
+        Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Circle.Visible = Settings.Settings.FOV
+        Circle.Thickness = Settings.Settings.FOVThickness
+        Circle.Radius = Settings.Settings.FOVSize
+        Circle.Color = Settings.Settings.tracerColor
+        Line.Visible = false
+        box.CFrame = CFrame.new(9999, 9990, 9999)
+        box2.CFrame = CFrame.new(9999, 9990, 9999)
+    else
+        Circle.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+        Circle.Visible = false
+        Line.Visible = false
+        box.CFrame = CFrame.new(9999, 9990, 9999)
+        box2.CFrame = CFrame.new(9999, 9990, 9999)
+    end
+    if Settings.Settings.box == true then
+        box.Size = Vector3.new(Settings.Settings.boxSize, Settings.Settings.boxSize, Settings.Settings.boxSize)
+    elseif Settings.Settings.box == false then
+        box.Size = Vector3.new(0, 0, 0)
+    end
+    if Settings.Settings.dot == true then
+        a.BackgroundTransparency = 0
+    elseif Settings.Settings.dot == false then
+        a.BackgroundTransparency = 1
+    end
+end)
+
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+setreadonly(mt, false)
+mt.__namecall = newcclosure(function(...)
+    local args = {...}
+    if Settings.AimLock.Enabled and Settings.AimLock.KeybindEnable and getnamecallmethod() == "FireServer" and args[2] == "MousePos" then
+        args[3] = Plr.Character[Settings.AimLock.Aimpart].Position + (Plr.Character[Settings.AimLock.Aimpart].Velocity * Settings.AimLock.Prediction)
+        return old(unpack(args))
+    end
+    return old(...)
+end)
+
+if Settings.AimLock.AirshotFunc == true then
+    if Plr.Character.Humanoid.Jump == true and Plr.Character.Humanoid.FloorMaterial == Enum.Material.Air then
+        Settings.AimLock.Aimpart = 'RightFoot'
+    else
+        Plr.Character:WaitForChild("Humanoid").StateChanged:Connect(function(old,flew)
+            if flew == Enum.HumanoidStateType.Freefall then
+                Settings.AimLock.Aimpart = 'RightFoot'
+            else
+                Settings.AimLock.Aimpart = Settings.AimLock.OldAimpart
+            end
+        end)
+    end
+end
+
+getgenv().BlinkKey = "LeftShift"
+
+local Players, Uis, RService = game:GetService"Players", game:GetService"UserInputService", game:GetService"RunService";
+local Client, CF, Vec3 = Players.LocalPlayer, CFrame.new, Vector3.new;
+local Blink, BlinkSpeed, KeyHeld, tableConcatenate = false, 1.6324, false, table.concat;
+local Commands, ScriptLoaded, LoadingTime = {}, true, tick();
+getgenv().Loaded = true
+getgenv().GetInit = function(CName)
+    for _, v in next, Commands do 
+        if table.find(v.Aliases, CName) then 
+            return v.Function 
+        end 
+    end
+end
+local function InputBeganEvent(Key)
+    if not Uis:GetFocusedTextBox() then 
+        if Key.KeyCode == Enum.KeyCode[BlinkKey] then 
+            KeyHeld = true 
+            while KeyHeld == true and Blink == true and Client and Client.Character and Client.Character:FindFirstChild"Humanoid" and RService.Heartbeat:Wait() do 
+                local ClientPF, H = Client.Character:FindFirstChild"HumanoidRootPart" or Client.Character:FindFirstChild"Torso", Client.Character.Humanoid
+                ClientPF.CFrame = ClientPF.CFrame + Vec3(H.MoveDirection.X * BlinkSpeed, H.MoveDirection.Y * BlinkSpeed, H.MoveDirection.Z * BlinkSpeed)
+            end
+        end
+    end
+end
+local function InputEndedEvent(Key)
+    if not Uis:GetFocusedTextBox() then 
+        if Key.KeyCode == Enum.KeyCode[BlinkKey] then 
+            KeyHeld = false 
+        end
+    end
+end
+Uis.InputBegan:Connect(InputBeganEvent)
+Uis.InputEnded:Connect(InputEndedEvent)
+
+local toggle6 = sector3.element('Toggle', 'Blink Speed', false, function(v)
+    Blink = v.Toggle
+end)
+
+local textbox2 = sector3.element('TextBox', '1.2', {Text = {'1.2'}}, function(v)
+    BlinkSpeed = v.Text
+end)
+
+local SpinV = false
+
+local toggle7 = sector4.element('Toggle', 'Spin Bot', false, function(v)
+    SpinV = v.Toggle
+end)
+
+toggle7:add_keybind(Enum.KeyCode.N, function()
+end)
+
+local slider5 = sector4.element('Slider', 'Spin Speed', {default = {min = 20, max = 140, default = 70}}, function(v)
+    SpinSpeed = v.Slider
+end)
+
+
+RunService.Heartbeat:connect(function()
+task.spawn(function()
+    while SpinV do
+        wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 90, 0)
+    end
+end)
+end)
+
+local AAKey = 'x'
+local AATog = false
+local HHC = 3.1
+local keybindtog = false
+
+local toggle13 = sector4.element('Toggle', 'Anti-Aim', false, function(v)
+    AATog = v.Toggle
+end)
+
+function FunctionAA()
+    local oldaa = game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldaa.X, -49, oldaa.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldaa.X, oldaa.Y, oldaa.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldaa.X, -49, oldaa.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldaa.X, oldaa.Y, oldaa.Z)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(oldaa.X, -49, oldaa.Z)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = HHC
+end
+
+game:GetService('UserInputService').InputBegan:Connect(function(Key)
+    if Key.KeyCode == Enum.KeyCode[AAKey:upper()] and not game:GetService('UserInputService'):GetFocusedTextBox() then
+        if AATog then
+            AATog = false
+            game.Players.LocalPlayer.Character.Humanoid.HipHeight = 2
+        elseif not AATog then
+            AATog = true
+            while AATog do
+                FunctionAA()
+                task.wait()
+            end
+        end
+    end
+end)
+
+local textbox3 = sector4.element('TextBox', '3.1', {Text = {'3.1'}}, function(v)
+    HHC = v.Text
+end)
+
+local ESP = loadstring(game:HttpGet("https://pastebin.com/raw/m5G7mHV4"))()
+
+ESP:Toggle(false)
+ESP.Tracers = false
+ESP.Names = false
+ESP.Boxes = false
+ESP.Color = Color3.fromRGB(84, 101, 255)
+ESP.TextColor = Color3.fromRGB(172, 172, 172)
+
+local toggle8 = sector5.element('Toggle', 'ESP', false, function(v)
+    ESP:Toggle(v.Toggle)
+end)
+
+toggle8:add_color({Color = Color3.fromRGB(84, 101, 255)}, nil, function(v)
+    ESP.Color = v.Color   
+end)
+
+local toggle9 = sector5.element('Toggle', 'Names', false, function(v)
+    ESP.Names = v.Toggle
+end)
+
+toggle9:add_color({Color = Color3.fromRGB(172, 172, 172)}, nil, function(v)
+    ESP.TextColor = v.Color
+end)
+
+local toggle10 = sector5.element('Toggle', 'Boxes', false, function(v)
+    ESP.Boxes = v.Toggle
+end)
+
+local toggle10 = sector5.element('Toggle', 'Tracers', false, function(v)
+    ESP.Tracers = v.Toggle
+end)
+
+local mat = Enum.Material.ForceField
+local bc = Color3.fromRGB(84, 101, 255)
+
+local button = sector6.element('Button', 'Remove Hats', nil, function()
+    for i,v in next, game:GetService('Players').LocalPlayer.Character:GetChildren() do
+        if v:IsA('Accessory') then
+            v:Destroy()
+        end
+     end
+end)
+
+local button2 = sector6.element('Button', 'Invisible', nil, function()
+    game.Players.LocalPlayer.Character.Shirt:Destroy()
+game.Players.LocalPlayer.Character.Pants:Destroy()
+game.Players.LocalPlayer.Character.Head.face:Destroy()
+
+for i,v in next, game:GetService('Players').LocalPlayer.Character:GetChildren() do
+    if v:IsA('Accessory') then
+        v.Handle.Material = mat
+        v.Handle.Color = bc
+        v.Handle.TextureID = ""
+    end
+end
+
+for i,v in next, game:GetService('Players').LocalPlayer.Character:GetChildren() do
+    if v:IsA('MeshPart') then
+        v.Material = mat
+        v.Color = bc
+    end
+end
+end)
+
+local toggle11 = sector6.element('Toggle', 'Character Color', false, function(v)
+    print(" ")
+end)
+
+toggle11:add_color({Color = Color3.fromRGB(84, 101, 255)}, nil, function(v)
+    for i,z in next, game:GetService('Players').LocalPlayer.Character:GetChildren() do
+        if z:IsA('MeshPart') then
+            z.Color = v.Color
+        end
+     end
+ end)
+
+ local dropdown3 = sector6.element('Dropdown', 'Character Material', {options = {'ForceField', 'Neon'}}, function(v)
+    for i,z in next, game:GetService('Players').LocalPlayer.Character:GetChildren() do
+        if z:IsA('MeshPart') then
+            mat = v.Dropdown
+        end
+    end
+ end)
+ local gunmat = Enum.Material.ForceField
+ local gunbc = Color3.fromRGB(84, 101, 255)
+
+ getgenv().Guns = true
+
+local toggle12 = sector7.element('Toggle', 'Gun Color', false, function(v)
+    task.spawn(function()
+        while v do
+            wait()
+            for i,v in next, game:GetService('Players').LocalPlayer.Character:GetChildren() do
+                if v:IsA('Tool') then
+                    v.Handle.Material = gunmat
+                    v.Handle.Color = gunbc
+                    v.Handle.TextureID = ""
+                end
+            end
+        end
+    end)
+end)
+
+toggle12:add_color({Color = Color3.fromRGB(84, 101, 255)}, nil, function(v)
+    gunbc = v.Color
+ end)
+
+ local dropdown4 = sector7.element('Dropdown', 'Gun Material', {options = {'ForceField', 'Neon'}}, function(v)
+    gunmat = v.Dropdown
+ end)
+
+ -- 14 Toggle starts here
