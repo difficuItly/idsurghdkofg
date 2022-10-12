@@ -145,13 +145,4 @@
                 end
             end
         end
-         if CheckIfJumped == true then
-       if AimlockTarget.Character.Humanoid.FloorMaterial == Enum.Material.Air then
-    
-           getgenv().AimPart = "Head"
-       else
-         getgenv().AimPart = getgenv().OldAimPart
-
-       end
-    end
 end)
