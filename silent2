@@ -1,0 +1,26 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local accomidationfactor = 0.12567724521
+local SilentAim = loadstring(game:HttpGet("https://pastebin.com/raw/85w1sv89"))() -- OG PASTEBIN: https://pastebin.com/raw/sAFuiLq0
+SilentAim.TeamCheck = false
+local mt = getrawmetatable(game)
+local backupindex = mt.__index
+setreadonly(mt, false)
+SilentAim.checkSilentAim = function()
+    local checkA = (SilentAim.SilentAimEnabled == true and SilentAim.Selected ~= LocalPlayer)
+    local playerCharacter = SilentAim.Selected.Character
+    return (checkA)
+end
+mt.__index = newcclosure(function(t, k)
+    if (t:IsA("Mouse") and (k == "Hit")) then
+        print(t, k)
+        local CPlayer = SilentAim.Selected
+        if (SilentAim.checkSilentAim()) then
+            if (CPlayer.Character:FindFirstChild("HumanoidRootPart")) then
+                return {p=(CPlayer.Character.HumanoidRootPart.CFrame.p+(CPlayer.Character.HumanoidRootPart.Velocity*accomidationfactor))}
+            end
+        end
+    end
+    return backupindex(t, k)
+end)
+setreadonly(mt, true)
