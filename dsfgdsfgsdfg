@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local accomidationfactor = 0.12567724521
 
-local SilentAim = loadstring(game:HttpGet("https://pastebin.com/raw/sAFuiLq0"))()
+local SilentAim = loadstring(game:HttpGet("https://pastebin.com/raw/85w1sv89"))()
 SilentAim.TeamCheck = false
 local mt = getrawmetatable(game)
 local backupindex = mt.__index
