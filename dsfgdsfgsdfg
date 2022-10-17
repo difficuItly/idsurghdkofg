@@ -18,13 +18,13 @@ mt.__index = newcclosure(function(t, k)
         local CPlayer = SilentAim.Selected
         if (SilentAim.checkSilentAim()) then
             if (CPlayer.Character:FindFirstChild("HumanoidRootPart")) then
-                return {p=(CPlayer.Character[TargetPart].CFrame.p+(CPlayer.Character[TargetPart].Velocity*accomidationfactor))}
+                return {p=(CPlayer.Character[getgenv().ValiantAimHack.TargetPart].CFrame.p+(CPlayer.Character[getgenv().ValiantAimHack.TargetPart].Velocity*accomidationfactor))}
             end
             CPlayer.Character:WaitForChild("Humanoid").StateChanged:Connect(function(old,flew)
                 if flew == Enum.HumanoidStateType.Freefall then
-                    return {p=(CPlayer.Character[TargetPart].CFrame.p+(CPlayer.Character[TargetPart].Velocity*accomidationfactor - 0.03))}
+                    return {p=(CPlayer.Character[getgenv().ValiantAimHack.TargetPart].CFrame.p+(CPlayer.Character[getgenv().ValiantAimHack.TargetPart].Velocity*accomidationfactor - 0.03))}
                 else
-                    return {p=(CPlayer.Character[TargetPart].CFrame.p+(CPlayer.Character[TargetPart].Velocity*accomidationfactor))}
+                    return {p=(CPlayer.Character[getgenv().ValiantAimHack.TargetPart].CFrame.p+(CPlayer.Character[getgenv().ValiantAimHack.TargetPart].Velocity*accomidationfactor))}
                 end
             end)
         end
