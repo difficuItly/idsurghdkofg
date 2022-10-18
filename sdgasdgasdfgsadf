@@ -12,7 +12,7 @@ getgenv().GetInit = function(CName)
 end
 local function InputBeganEvent(Key)
     if not Uis:GetFocusedTextBox() then 
-        if Key.KeyCode == Enum.KeyCode[BlinkKey] then
+        if Key.KeyCode == getgenv().BlinkKey then
             KeyHeld = true 
             while KeyHeld == true and getgenv().Blink == true and Client and Client.Character and Client.Character:FindFirstChild"Humanoid" and RService.Heartbeat:Wait() do 
                 local ClientPF, H = Client.Character:FindFirstChild"HumanoidRootPart" or Client.Character:FindFirstChild"Torso", Client.Character.Humanoid
@@ -23,7 +23,7 @@ local function InputBeganEvent(Key)
 end
 local function InputEndedEvent(Key)
     if not Uis:GetFocusedTextBox() then 
-        if Key.KeyCode == Enum.KeyCode[BlinkKey] then 
+        if Key.KeyCode == getgenv().BlinkKey then 
             KeyHeld = false 
         end
     end
