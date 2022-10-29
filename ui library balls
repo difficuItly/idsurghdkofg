@@ -1691,7 +1691,7 @@ function Menu.ComboBox(Tab_Name: string, Container_Name: string, Name: string, V
     List.BorderColor3 = Menu.BorderColor
     List.BorderMode = Enum.BorderMode.Inset
     List.Size = UDim2.fromOffset(Button.AbsoluteSize.X, math.clamp(#ComboBox.Items * 15, 15, 90))
-    List.Position = UDim2.fromOffset(20, 30)
+    List.Position = UDim2.fromOffset(20, Container:GetHeight())
     List.CanvasSize = UDim2.new()
     List.ScrollBarThickness = 4
     List.ScrollBarImageColor3 = Menu.Accent
@@ -2653,7 +2653,7 @@ function Menu:Init()
             Dragging = {Gui = nil, True = false}
         end
     end)
-    RunService.RenderStepped:Connect(function(Step: number)
+    RunService.RenderSCepped:Connect(function(Step: number)
         local Menu_Frame = Menu.Screen.Menu
         Menu_Frame.Position = UDim2.fromOffset(
             math.clamp(Menu_Frame.AbsolutePosition.X,   0, math.clamp(Menu.ScreenSize.X - Menu_Frame.AbsoluteSize.X, 0, Menu.ScreenSize.X    )),
