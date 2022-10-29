@@ -1691,7 +1691,7 @@ function Menu.ComboBox(Tab_Name: string, Container_Name: string, Name: string, V
     List.BorderColor3 = Menu.BorderColor
     List.BorderMode = Enum.BorderMode.Inset
     List.Size = UDim2.fromOffset(Button.AbsoluteSize.X, math.clamp(#ComboBox.Items * 15, 15, 90))
-    List.Position = UDim2.fromOffset(20, Container:GetHeight())
+    List.Position = Button.Position
     List.CanvasSize = UDim2.new()
     List.ScrollBarThickness = 4
     List.ScrollBarImageColor3 = Menu.Accent
