@@ -7,12 +7,12 @@
 
 
 local Settings = {
-    Accent = Color3.fromHex("#8F30A7"),
+    Accent = Color3.fromHex("#8563b6"),
     Font = Enum.Font.SourceSans,
     IsBackgroundTransparent = true,
     Rounded = false,
     Dim = false,
-    
+
     ItemColor = Color3.fromRGB(30, 30, 30),
     BorderColor = Color3.fromRGB(45, 45, 45),
     MinSize = Vector2.new(300, 400),
@@ -26,7 +26,7 @@ local Items = {}
 local EventObjects = {} -- For updating items on menu property change
 local Notifications = {}
 
-local Scaling = {True = false, Origin = nil, Size = nil}
+local Scaling = {True = true, Origin = nil, Size = nil}
 local Dragging = {Gui = nil, True = false}
 local Draggables = {}
 local ToolTip = {Enabled = false, Content = "", Item = nil}
