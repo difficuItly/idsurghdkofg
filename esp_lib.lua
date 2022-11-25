@@ -463,7 +463,8 @@ function espLibrary:Load(renderValue)
 
                 local pointA, pointB, pointC = arrowPosition, screenCenter + arrowDirection * (arrowRadius - arrowSize) + rightVector * arrowSize, screenCenter + arrowDirection * (arrowRadius - arrowSize) + -rightVector * arrowSize;
 
-                local health, maxHealth = Utils.math_round(self.getHealth(player, character), 2);
+                local humanoid = findFirstChild(character, "Humanoid");
+                local health, maxHealth = Utils.math_round(humanoid.Health, 2), humanoid.MaxHealth
                 local healthBarSize = round(vector2New(self.options.healthBarsSize, -(size.Y * (health / maxHealth))));
                 local healthBarPosition = round(vector2New(position.X - (3 + healthBarSize.X), position.Y + size.Y));
 
