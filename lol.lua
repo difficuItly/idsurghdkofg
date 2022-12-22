@@ -8,6 +8,10 @@ local FakeCFramePosY   = 45967
 local FakeCFramePosZ   = 34895
 local FakeCframePosR   = 0
 
+function RandomNumberRange(a)
+	return math.random(-a + 0, a + 0) / FakeCframePosR
+end
+
 game:GetService("RunService").heartbeat:Connect(function()
     if getgenv().AntiTriggerBot then
         FakeCFrameTypes[1] = LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -27,7 +31,7 @@ game:GetService("RunService").heartbeat:Connect(function()
         LocalPlayer.Character.HumanoidRootPart.CFrame = FakeCFrameTypes[1]
         LocalPlayer.Character.HumanoidRootPart.AssemblyLinearVelocity = FakeCFrameTypes[2]
     end
-end
+end)
 
 FakeCFrameHook = hookmetamethod(game, '__index', newcclosure(function(Self, Key)
 	if getgenv().AntiTriggerBot then
