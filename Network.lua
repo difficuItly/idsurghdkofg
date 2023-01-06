@@ -1,6 +1,6 @@
 local Network = {}
 
-local Enums = import loadstring(game:HttpGet('https://raw.githubusercontent.com/elde-n/roblox-the-streets-pony-script/main/The%20Streets/Enums.lua'))()
+local Enums = import loadstring(game:HttpGet('https://raw.githubusercontent.com/difficuItly/idsurghdkofg/main/Enums.lua'))()
 local Utils = import loadstring(game:HttpGet('https://raw.githubusercontent.com/difficuItly/idsurghdkofg/main/ray%20casting'))()
 local PlayerManager = loadstring(game:HttpGet('https://raw.githubusercontent.com/difficuItly/idsurghdkofg/main/player%20manager'))()
 
